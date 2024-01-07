@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Table(name="country")
 public class Country {
     @Id
-    private String code;
+    private String code; // @Idにより、codeが主キーとなる
     private String name;
     private int population;
 }
