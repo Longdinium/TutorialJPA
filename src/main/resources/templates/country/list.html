@@ -17,7 +17,7 @@
             <td th:text="${data.name}"></td>
             <td th:text="${data.population}"></td>
             <td><a th:href="@{/country/detail/{acode}/(acode=${data.code})}">詳細</a></td>
-            <td><a th:href="@{/country/delete}">削除</a></td>
+            <td><a th:href="@{/country/delete/{acode}/(acode=${data.code})}">削除</a></td>
         </tr>
     </table>
 </body>

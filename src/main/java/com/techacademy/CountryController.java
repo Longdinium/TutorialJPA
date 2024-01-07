@@ -31,10 +31,10 @@ public class CountryController {
     // ----- 詳細画面 -----
     @GetMapping(value = { "/detail", "/detail/{code}/" } )
     public String getCountry(@PathVariable(name = "code", required = false) String code, Model model) {
+        Country country = code != null ? service.getCountry(code) : new Country();
         // （URLで？）codeが指定されていたら検索結果を、無ければ空のクラスを設定 -> つまり三項演算子
         // 必ず Country オブジェクトをModelに登録することで、detail.html テンプレートの方でエラーになることを防いでいます。
 
-        Country country = code != null ? service.getCountry(code) : new Country();
         // Modelに登録
         model.addAttribute("country", country);
         // country/detail.htmlに画面遷移
@@ -57,10 +57,16 @@ public class CountryController {
 
 
     // ----- 削除画面 -----
-    @GetMapping("/delete")
-    public String deleteCountryForm(Model model) {
+    @GetMapping(value = { "/delete", "/delete/{code}/" } ) // 修正
+    public String deleteCountryForm(@PathVariable(name = "code", required = false) String code, Model model) {
+        if (code != null) {
+            // URLでcodeが指定されているとき
+            service.getCountry(code);
+            model.addAttribute("code", code);
+        }
         // country/delete.htmlに画面遷移
         return "country/delete";
+
     }
 
 
